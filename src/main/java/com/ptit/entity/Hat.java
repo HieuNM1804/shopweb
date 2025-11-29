@@ -1,6 +1,10 @@
 package com.ptit.entity;
 
 public class Hat extends Product {
+        @Override
+        public String getName() {
+            return super.getName() + " (Hat)";
+        }
     private String color;
     private String style;
     // getter/setter

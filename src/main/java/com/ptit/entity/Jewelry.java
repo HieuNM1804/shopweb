@@ -1,6 +1,10 @@
 package com.ptit.entity;
 
 public class Jewelry extends Product {
+        @Override
+        public String getName() {
+            return super.getName() + " (Jewelry)";
+        }
     private String material;
     private String gemstone;
     // getter/setter

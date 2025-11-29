@@ -1,6 +1,14 @@
 package com.ptit.entity;
 
 public class Watch extends Product {
+            @Override
+            public String getName() {
+                return super.getName() + " (Watch)";
+            }
+        @Override
+        public String getProductType() {
+            return "Watch";
+        }
     private String brand;
     private String strapMaterial;
     // getter/setter

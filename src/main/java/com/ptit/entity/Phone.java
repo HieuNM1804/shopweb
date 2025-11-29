@@ -1,6 +1,10 @@
 package com.ptit.entity;
 
 public class Phone extends Product {
+        @Override
+        public String getProductType() {
+            return "Phone";
+        }
     private String os;
     private String screenSize;
     // getter/setter

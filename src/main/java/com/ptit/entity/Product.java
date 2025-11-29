@@ -14,14 +14,16 @@ import java.util.List;
 @Table(name = "Products")
 public class Product implements Serializable {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String name;
-    String image;
-    String public_id;
-    Double price;
-    Integer quantity;
+    private Integer id;
+    private String name;
+    private String image;
+    private String public_id;
+    private Double price;
+    private Integer quantity;
     @Temporal(TemporalType.DATE)
     @Column(name = "Createdate")
     Date createDate = new Date();
@@ -113,5 +115,8 @@ public class Product implements Serializable {
 
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+    public String getProductType() {
+        return "Product";
     }
 }

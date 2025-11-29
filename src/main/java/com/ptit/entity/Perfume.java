@@ -1,6 +1,10 @@
 package com.ptit.entity;
 
 public class Perfume extends Product {
+        @Override
+        public String getName() {
+            return super.getName() + " (Perfume)";
+        }
     private String fragrance;
     private String brand;
     // getter/setter

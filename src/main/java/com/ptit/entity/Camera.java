@@ -1,6 +1,10 @@
 package com.ptit.entity;
 
 public class Camera extends Product {
+        @Override
+        public String getName() {
+            return super.getName() + " (Camera)";
+        }
     private String resolution;
     private String sensorType;
     // getter/setter

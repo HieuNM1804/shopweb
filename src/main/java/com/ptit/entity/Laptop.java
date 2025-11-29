@@ -1,6 +1,10 @@
 package com.ptit.entity;
 
 public class Laptop extends Product {
+        @Override
+        public String getProductType() {
+            return "Laptop";
+        }
     private String cpu;
     private String ram;
     // getter/setter

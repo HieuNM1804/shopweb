@@ -1,6 +1,10 @@
 package com.ptit.entity;
 
 public class TravelBag extends Product {
+        @Override
+        public String getName() {
+            return super.getName() + " (TravelBag)";
+        }
     private String size;
     private String material;
     // getter/setter
