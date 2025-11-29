@@ -1,0 +1,57 @@
+<div class="row mx-0 bg-white">
+    <div class="col-md-4 text-center">
+        <div class="card">
+            <div class="card-body">
+                <img ng-src="{{form.photo}}" class="img-fluid img-thumbnail"
+                    style="max-height: 300px; width: 100%; object-fit: cover;" alt="Customer Image" ng-show="form.photo">
+                <div ng-show="!form.photo" class="text-muted">
+                    <i class="fas fa-image fa-3x mb-2"></i>
+                    <img src="https://res.cloudinary.com/djhidgxfo/image/upload/v1750748027/cloud-upload_c6zitf.jpg" class="img-fluid img-thumbnail"
+                        style="max-height: 300px; width: 100%; object-fit: cover;" alt="No Image">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <form class="form p-3">
+            <div class="form-group row">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" ng-model="form.username" placeholder="Enter username">
+            </div>
+            <div class="form-group row">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" ng-model="form.password" placeholder="Enter password">
+            </div>
+            <div class="form-group row">
+                <label class="form-label">Fullname</label>
+                <input type="text" class="form-control" ng-model="form.fullname" placeholder="Enter fullname">
+            </div>
+            <div class="form-group row">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" ng-model="form.email" placeholder="Enter email">
+            </div>
+            <div class="form-group row">
+                <label class="form-label">Photo</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image"
+                        onchange="angular.element(this).scope().imageChanged(this.files)">
+                    <label class="custom-file-label">Choose file</label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="card-header text-center">
+    <button ng-click="create()" class="btn btn-primary">
+        <i class="fas fa-plus mr-1"></i> Create
+    </button>
+    <button ng-click="update()" class="btn btn-success">
+        <i class="far fa-save mr-1"></i> Update
+    </button>
+    <button ng-click="delete(form)" class="btn btn-danger">
+        <i class="fas fa-trash mr-1"></i> Delete
+    </button>
+    <button ng-click="reset()" class="btn btn-secondary">
+        <i class="fas fa-redo mr-1"></i> Reset
+    </button>
+</div>

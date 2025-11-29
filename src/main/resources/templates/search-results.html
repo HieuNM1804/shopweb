@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/index :: dynamic(~{::main})}">
+
+<body>
+    <main>
+        <div class="page-header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="page-header-content">
+                            <nav class="breadcrumb-area">
+                                <ul class="breadcrumb">
+                                    <li>
+                                        <a href="/">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-sep">/</li>
+                                    <li>Search</li>
+                                </ul>
+                            </nav>
+                            <h4 class="title" th:if="${keyword}" th:text="|Tìm kiếm cho '${keyword}'|">Tìm kiếm </h4>
+                            <h4 class="title" th:unless="${keyword}">Tìm kiếm </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Area Start -->
+        <section class="product-area section-space">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Search Summary -->
+                        <div th:if="${keyword}" class="search-summary mb-4 text-center">
+                            <div class="search-info p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px; border: 1px solid #dee2e6;">
+                                <h5 class="mb-2">Kết quả tìm kiếm </h5>
+                                <p class="mb-1">Tìm thấy <span th:text="${#lists.size(items)}" class="fw-bold text-primary"></span> sản phẩm cho "<span th:text="${keyword}" class="text-dark fw-bold"></span>"</p>
+                                <small class="text-muted">Khám phá bộ sưu tập tuyệt vời của chúng tôi</small>
+                            </div>
+                        </div>
+                        
+                        <!-- No Results -->
+                        <div th:if="${#lists.isEmpty(items)}" class="no-results text-center py-5">
+                            <div class="mb-4">
+                                <i class="zmdi zmdi-search" style="font-size: 80px; color: #ddd;"></i>
+                            </div>
+                            <h3 class="mb-3">Không tìm thấy sản phẩm</h3>
+                            <p class="text-muted mb-4">Hãy thử từ khóa khác hoặc duyệt các danh mục của chúng tôi</p>
+                            <a th:href="@{/}" class="btn btn-primary">Về trang chủ</a>
+                        </div>
+                        
+                        <!-- Products Grid -->
+                        <div th:unless="${#lists.isEmpty(items)}" class="row">
+                            <div class="col-md-3" th:each="p : ${items}">
+                                <div class="product-item">
+                                    <div class="inner-content">
+                                        <div class="product-thumb"> 
+                                            <a th:href="@{|/product/detail/${p.id}|}">
+                                                <img class="product-item m-auto d-block" th:src="${p.image}"
+                                                    th:title="${p.name}">
+                                            </a>
+                                            <div class="product-action">
+                                                <div class="addto-wrap">
+                                                    <a class="add-wishlist" href="javascript:void(0);"
+                                                        th:attr="ng-click=@{|toggleFavorite(${p.id})|}, ng-class=@{|{'favorited': isFavorite(${p.id})}|}"
+                                                        th:data-product-id="${p.id}">
+                                                        <i class="zmdi zmdi-hc-fw icon" 
+                                                           th:attr="ng-class=@{|isFavorite(${p.id}) ? 'zmdi-favorite' : 'zmdi-favorite-outline'|}"></i>
+                                                    </a>
+                                                    <a class="add-cart" href="javascript:void(0);"
+                                                        th:attr="ng-click=@{|cart.add(${p.id})|}">
+                                                        <i class="zmdi zmdi-shopping-cart-plus icon"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-desc">
+                                            <div class="product-info">
+                                                <h4 class="title">
+                                                    <a th:href="@{|/product/detail/${p.id}|}">[(${p.name})]</a>
+                                                </h4>
+                                                <div class="prices">
+                                                    <span
+                                                        class="price">[[${#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}]]₫</span>
+                                                </div>
+                                                <div class="quantity" style="font-size: 13px; color: #666; margin-top: 5px;">
+                                                    <span>Số lượng: [[${p.quantity}]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Back to Search -->
+                        <div class="text-center mt-5">
+                            <a href="javascript:history.back()" class="btn btn-outline-secondary px-4">
+                                <i class="zmdi zmdi-arrow-left"></i> Quay lại
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Product Area End -->
+    </main>
+</body>
+
+</html>

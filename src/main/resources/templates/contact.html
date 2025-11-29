@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/index :: dynamic(~{::main})}">
+
+<body>
+    <main class="main-content">
+        <div class="page-header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="page-header-content">
+                            <nav class="breadcrumb-area">
+                                <ul class="breadcrumb">
+                                    <li>
+                                        <a href="/">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-sep">/</li>
+                                    <li>Contact</li>
+                                </ul>
+                            </nav>
+                            <h4 class="title">Liên hệ</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="contact-info-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="contact-info-item">
+                            <h4>LIÊN HỆ TRỰC TIẾP</h4>
+                            <p> hwiyou2005@gmail.com</p>
+                            <p><a href="tel:+84349298608">+84 349298608</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="contact-info-item">
+                            <h4>THĂM QUAN TRƯỜNG CỦA CHÚNG TÔI</h4>
+                            <p>Học viện Công nghệ Bưu chính Viễn thông,</p>
+                            <p>Km 10 Đường Nguyễn Trãi, Phường Mỗ Lao, Quận Hà Đông, Hà Nội</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 offset-md-3 col-lg-4 offset-lg-0">
+                        <div class="contact-info-item">
+                            <h4>LÀM VIỆC VỚI CHÚNG TÔI</h4>
+                            <p>Gửi email cho chúng tôi:</p>
+                            <p> hwiyou2005@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title">
+                            <h2>Liên hệ với chúng tôi</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="contact-form-content">
+                            <div class="contact-form">
+                                <form id="contact-form">
+                                    <div class="row">
+                                        <div class="col-md-9 m-auto">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" name="con_name"
+                                                            placeholder="Tên của bạn" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="email" name="con_email"
+                                                            placeholder="Email của bạn" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" name="con_phone"
+                                                            placeholder="Số điện thoại">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" name="con_message"
+                                                            placeholder="Tin nhắn của bạn"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group text-center">
+                                                        <button class="btn btn-link btn-contact" type="submit">Gửi tin nhắn
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="form-message"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

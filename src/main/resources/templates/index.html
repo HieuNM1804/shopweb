@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/index :: dynamic(~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Trang chủ</title>
+</head>
+
+<body>
+    <main>
+        <section class="home-slider-area">
+            <div class="swiper-container swiper-slide-gap home-slider-container default-slider-container">
+                <div class="swiper-wrapper home-slider-wrapper slider-default">
+                    <!-- Show category sliders if category is selected -->
+                    <th:block th:if="${sliderImages != null}">
+                        <div class="swiper-slide" th:each="imgPath : ${sliderImages}">
+                            <div class="slider-content-area" 
+                                 th:style="|background-image: url('${imgPath}'); background-position: center center; background-size: contain; background-repeat: no-repeat;|">
+                            </div>
+                        </div>
+                    </th:block>
+                    <!-- Show default sliders if no category selected -->
+                    <div class="swiper-slide" th:if="${sliderImages == null}">
+                        <div class="slider-content-area" style="background-image: url(/assets/img/slider/slider-01.jpg); background-position: center center; background-size: contain; background-repeat: no-repeat;">
+                        </div>
+                    </div>
+                    <div class="swiper-slide" th:if="${sliderImages == null}">
+                        <div class="slider-content-area" style="background-image: url(/assets/img/slider/slider-02.jpg); background-position: center center; background-size: contain; background-repeat: no-repeat;">
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next">
+                    <i class="zmdi zmdi-chevron-right"></i>
+                </div>
+                <div class="swiper-button-prev">
+                    <i class="zmdi zmdi-chevron-left"></i>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+            <section class="product-area">
+                <div class="container product-pb" data-padding-bottom="25">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-lg-7 m-auto">
+                                    <div class="section-title text-center">
+                                        <h2 class="title">Sản phẩm mới</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Sorting Dropdown -->
+                            <div class="row mb-4">
+                                <div class="col-12 d-flex justify-content-end" style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+                                    <div class="dropdown">
+                                        <button class="btn btn-theme dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 30px; padding: 8px 20px;">
+                                            <i class="zmdi zmdi-sort-amount-desc" style="margin-right: 5px;"></i> 
+                                            <span th:if="${sort == null}">Sắp xếp: Mặc định</span>
+                                            <span th:if="${sort == 'price_asc'}">Sắp xếp: Giá tăng dần</span>
+                                            <span th:if="${sort == 'price_desc'}">Sắp xếp: Giá giảm dần</span>
+                                            <span th:if="${sort == 'quantity_asc'}">Sắp xếp: Số lượng tăng dần</span>
+                                            <span th:if="${sort == 'quantity_desc'}">Sắp xếp: Số lượng giảm dần</span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
+                                            <li><a class="dropdown-item" th:classappend="${sort == null} ? 'active' : ''" th:href="@{/index(cid=${cid})}">Mặc định</a></li>
+                                            <li><a class="dropdown-item" th:classappend="${sort == 'price_asc'} ? 'active' : ''" th:href="@{/index(cid=${cid}, sort='price_asc')}">Giá tăng dần</a></li>
+                                            <li><a class="dropdown-item" th:classappend="${sort == 'price_desc'} ? 'active' : ''" th:href="@{/index(cid=${cid}, sort='price_desc')}">Giá giảm dần</a></li>
+                                            <li><a class="dropdown-item" th:classappend="${sort == 'quantity_asc'} ? 'active' : ''" th:href="@{/index(cid=${cid}, sort='quantity_asc')}">Số lượng tăng dần</a></li>
+                                            <li><a class="dropdown-item" th:classappend="${sort == 'quantity_desc'} ? 'active' : ''" th:href="@{/index(cid=${cid}, sort='quantity_desc')}">Số lượng giảm dần</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3" th:each="p:${items}">
+                                    <div class="product-item">
+                                        <div class="inner-content">
+                                            <div class="product-thumb"> 
+                                                <a th:href="@{|/product/detail/${p.id}|}">
+                                                    <img class="product-item m-auto d-block" th:src="${p.image}"
+                                                        th:title="${p.name}">
+                                                </a>
+                                                <div class="product-action">
+                                                    <div class="addto-wrap">
+                                                        <a class="add-wishlist" href="javascript:void(0);"
+                                                            th:attr="ng-click=@{|toggleFavorite(${p.id})|}, ng-class=@{|{'favorited': isFavorite(${p.id})}|}"
+                                                            th:data-product-id="${p.id}">
+                                                            <i class="zmdi zmdi-hc-fw icon" 
+                                                               th:attr="ng-class=@{|isFavorite(${p.id}) ? 'zmdi-favorite' : 'zmdi-favorite-outline'|}"></i>
+                                                        </a>
+                                                        <a class="add-cart" href="javascript:void(0);"
+                                                            th:attr="ng-click=@{|cart.add(${p.id})|}">
+                                                            <i class="zmdi zmdi-shopping-cart-plus icon"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-desc">
+                                                <div class="product-info">
+                                                    <h4 class="title">
+                                                        <a th:href="@{|/product/detail/${p.id}|}">[(${p.name})]</a>
+                                                    </h4>
+                                                    <div class="prices">
+                                                        <span
+                                                            class="price">[[${#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')}]]₫</span>
+                                                    </div>
+                                                    <div class="quantity" style="font-size: 13px; color: #666; margin-top: 5px;">
+                                                        <span>Số lượng: [[${p.quantity}]]</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="pagination-content-wrap border-bottom">
+                        <nav class="pagination-nav">
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous Button -->
+                                <li th:classappend="${currentPage <= 0} ? 'disabled' : ''">
+                                    <a class="prev" th:href="@{/index(page=${currentPage - 1}, cid=${cid}, sort=${sort})}"
+                                        th:if="${currentPage > 0}">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </a>
+                                    <a class="prev" th:if="${currentPage <= 0}">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                                <!-- First Page Button -->
+                                <li th:if="${currentPage > 1}">
+                                    <a th:href="@{/index(page=0, cid=${cid}, sort=${sort})}">1</a>
+                                </li>
+                                <!-- Ellipsis for Hidden Pages -->
+                                <li th:if="${currentPage > 2}">
+                                    <span>...</span>
+                                </li>
+                                <!-- Current Page -->
+                                <li>
+                                    <a th:href="@{/index(page=${currentPage}, cid=${cid}, sort=${sort})}" th:text="${currentPage + 1}"
+                                        class="active">Current</a>
+                                </li>
+                                <!-- Ellipsis for Hidden Pages -->
+                                <li th:if="${currentPage < totalPages - 3}">
+                                    <span>...</span>
+                                </li>
+                                <!-- Last Page Button -->
+                                <li th:if="${currentPage < totalPages - 2}">
+                                    <a th:href="@{/index(page=${totalPages - 1}, cid=${cid}, sort=${sort})}" th:text="${totalPages}">Last</a>
+                                </li>
+                                <!-- Next Button -->
+                                <li th:classappend="${currentPage >= totalPages - 1} ? 'disabled' : ''">
+                                    <a class="next" th:href="@{/index(page=${currentPage + 1}, cid=${cid}, sort=${sort})}"
+                                        th:if="${currentPage < totalPages - 1}">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                    <a th:if="${currentPage >= totalPages - 1}">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <section class="feature-area">
+                <div class="container pb-1">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="feature-icon-box">
+                                <div class="inner-content">
+                                    <div class="icon-box">
+                                        <i class="icon zmdi zmdi-pin"></i>
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title">Miễn phí vận chuyển toàn cầu</h5>
+                                        <p>Miễn phí vận chuyển cho đơn hàng trên $100</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="feature-icon-box">
+                                <div class="inner-content">
+                                    <div class="icon-box">
+                                        <i class="icon zmdi zmdi-headset"></i>
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title">Hỗ trợ 24/7</h5>
+                                        <p>Liên hệ với chúng tôi 24 giờ mỗi ngày</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <div class="feature-icon-box">
+                                <div class="inner-content mb-0">
+                                    <div class="icon-box">
+                                        <i class="icon zmdi zmdi-card"></i>
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="title">100% thanh toán an toàn</h5>
+                                        <p>Thanh toán của bạn được bảo mật với chúng tôi.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="brand-logo-area">
+                <div class="container">
+                    <div class="brand-logo-content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="swiper-container swiper-slide-gap brand-logo-slider-container">
+                                    <div class="swiper-wrapper">
+                                        
+                                        <div class="swiper-slide">
+                                            <div class="brand-logo-item">
+                                                <a href="javascript:(0);">
+                                                    <img src="assets/img/brand/2.png">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="brand-logo-item">
+                                                <a href="javascript:(0);">
+                                                    <img src="assets/img/brand/3.png">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="brand-logo-item">
+                                                <a href="javascript:(0);">
+                                                    <img src="assets/img/brand/4.png">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="brand-logo-item">
+                                                <a href="javascript:(0);">
+                                                    <img src="assets/img/brand/5.png">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="brand-logo-item">
+                                                <a href="javascript:(0);">
+                                                    <img src="assets/img/brand/1.png">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>
