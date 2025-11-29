@@ -11,9 +11,11 @@ import com.ptit.dao.CartItemDAO;
 import com.ptit.dao.ProductDAO;
 import com.ptit.dao.CustomerDAO;
 import com.ptit.entity.Customers;
+import com.ptit.util.ProductMapper;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -45,7 +47,12 @@ public class CartRestController {
     @GetMapping("/{customerIdOrUsername}")
     public List<CartItem> getCartItems(@PathVariable("customerIdOrUsername") String customerIdOrUsername) {
         Integer customerId = resolveCustomerId(customerIdOrUsername);
-        return cartItemDAO.findByCustomerId(customerId);
+        List<CartItem> items = cartItemDAO.findByCustomerId(customerId);
+        // Map product sang DTO đa hình
+        for (CartItem item : items) {
+            item.setProduct((Product) ProductMapper.toDTO(item.getProduct()));
+        }
+        return items;
     }
 
     // Thêm sản phẩm vào giỏ hàng

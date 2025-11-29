@@ -3,7 +3,9 @@ package com.ptit.rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.ptit.dao.OrderDAO;
 import com.ptit.entity.Order;
+import com.ptit.entity.Product;
 import com.ptit.service.OrderService;
+import com.ptit.util.ProductMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,15 @@ public class OrderRestController {
 
     @GetMapping
     public List<Order> getAll() {
-        return orderDAO.findAll();
+        List<Order> orders = orderDAO.findAll();
+        for (Order order : orders) {
+            if (order.getOrderDetails() != null) {
+                for (var detail : order.getOrderDetails()) {
+                    detail.setProduct((Product) ProductMapper.toDTO(detail.getProduct()));
+                }
+            }
+        }
+        return orders;
     }    
     
     @PostMapping
@@ -46,6 +56,11 @@ public class OrderRestController {
     @GetMapping("/{id}")
     public ResponseEntity<Order> getById(@PathVariable Long id) {
         Order order = orderService.findById(id);
+        if (order != null && order.getOrderDetails() != null) {
+            for (var detail : order.getOrderDetails()) {
+                detail.setProduct((Product) ProductMapper.toDTO(detail.getProduct()));
+            }
+        }
         return order != null ? ResponseEntity.ok(order) : ResponseEntity.notFound().build();
     }
 

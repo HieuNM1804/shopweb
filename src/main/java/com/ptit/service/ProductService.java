@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.ptit.dao.CategoryDAO;
 import com.ptit.dao.ProductDAO;
 import com.ptit.entity.Product;
+import com.ptit.util.ProductMapper;
 import com.ptit.util.StringUtils;
 
 import java.util.List;
@@ -123,5 +124,24 @@ public class ProductService {
     public List<Product> findByNameIgnoringAccentsAndCategoryId(String keyword, String categoryId) {
         String processedKeyword = StringUtils.removeAccents(keyword);
         return pdao.findByNameIgnoringAccentsAndCategoryId(processedKeyword, categoryId);
+    }
+
+    public Object findDTOById(Integer id) {
+        Product p = findById(id);
+        return ProductMapper.toDTO(p);
+    }
+
+    public List<Object> findAllDTO() {
+        return findAll().stream().map(ProductMapper::toDTO).toList();
+    }
+
+    public Product createFromDTO(Object dto) {
+        Product p = ProductMapper.toEntity(dto);
+        return create(p);
+    }
+
+    public Product updateFromDTO(Object dto) {
+        Product p = ProductMapper.toEntity(dto);
+        return update(p);
     }
 }

@@ -5,6 +5,7 @@ import com.ptit.entity.Favorite;
 import com.ptit.entity.Product;
 import com.ptit.service.FavoriteService;
 import com.ptit.service.CustomerService;
+import com.ptit.util.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -96,15 +98,12 @@ public class FavoriteRestController {
             }
 
             List<Product> favorites = favoriteService.getFavoriteProductsByCustomerId(customer.getId());
-            
+            List<Object> favoriteDTOs = favorites.stream().map(ProductMapper::toDTO).collect(Collectors.toList());
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
-            response.put("favorites", favorites);
-            response.put("count", favorites.size());
-            
+            response.put("favorites", favoriteDTOs);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.err.println("Error in getFavorites: " + e.getMessage());
             return createErrorResponse("Có lỗi xảy ra: " + e.getMessage());
         }
     }

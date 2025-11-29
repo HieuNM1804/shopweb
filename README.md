@@ -1,61 +1,178 @@
-# WebShop - E-commerce Application
+---
 
-## 📋 Mô tả dự án
+# BÁO CÁO OOP VÀ QUAN HỆ ENTITY TRONG DỰ ÁN
 
-WebShop là một ứng dụng thương mại điện tử đầy đủ tính năng được xây dựng bằng **Spring Boot 3.3.5** và **Java 17**. Dự án này cung cấp một nền tảng mua sắm trực tuyến hoàn chỉnh với giao diện người dùng thân thiện và hệ thống quản trị mạnh mẽ.
+## Giới thiệu về website
 
-## 🏗️ Kiến trúc hệ thống
+WebShop là hệ thống thương mại điện tử cho phép người dùng mua sắm trực tuyến với trải nghiệm hiện đại, bảo mật và tiện lợi. Website hỗ trợ đầy đủ các chức năng cho khách hàng và quản trị viên, bao gồm:
 
-### Frontend
-- **Thymeleaf** - Template engine cho server-side rendering
-- **AngularJS** - Frontend framework cho admin panel
-- **Bootstrap** - UI framework responsive
-- **jQuery** - JavaScript library
+- Đăng ký, đăng nhập, xác thực và quản lý tài khoản cá nhân.
+- Phân quyền người dùng: Hệ thống phân biệt rõ vai trò khách hàng (user) và quản trị viên (admin). Quản trị viên có quyền quản lý sản phẩm, danh mục, đơn hàng, khách hàng, phân quyền tài khoản, thống kê doanh thu, v.v.
+- Duyệt, tìm kiếm, lọc, sắp xếp sản phẩm: Người dùng có thể tìm kiếm sản phẩm theo tên, lọc theo danh mục, sắp xếp theo giá, ngày tạo, số lượng, v.v. Hỗ trợ tìm kiếm không dấu, phân trang và trải nghiệm mượt mà.
+- Xem chi tiết sản phẩm, thêm vào giỏ hàng, cập nhật/xóa sản phẩm trong giỏ.
+- Đặt hàng, nhập địa chỉ giao hàng, chọn phương thức thanh toán (giả lập VNPay).
+- Quản lý đơn hàng: Xem lịch sử, chi tiết, trạng thái đơn hàng.
+- Quản lý sản phẩm yêu thích: Thêm/xóa sản phẩm yêu thích, xem danh sách yêu thích.
+- Quản trị viên có thể thêm, sửa, xóa sản phẩm, danh mục, khách hàng, xác nhận đơn hàng, cập nhật trạng thái, xem thống kê sản phẩm bán chạy, doanh thu, số lượng đơn hàng.
+- Tích hợp upload ảnh sản phẩm lên Cloudinary, giao diện responsive, hỗ trợ nhiều trình duyệt.
 
-### Backend
-- **Spring Boot 3.3.5** - Main framework
-- **Spring Security 6** - Authentication & Authorization
-- **Spring Data JPA** - Data access layer
-- **Spring Boot Actuator** - Monitoring & metrics
 
-### Database
-- **MySQL 8** - Primary database
-- **Hibernate** - ORM framework
+## Các framework, thư viện đã sử dụng
 
-### External Services
-- **Cloudinary** - Image storage & management
-- **VNPay** - Payment gateway integration
-- **Gmail SMTP** - Email service
-- **Google OAuth2** - Social login
+- **Spring Boot**: Framework backend chính, quản lý dependency, cấu hình tự động.
+- **Spring Data JPA**: Quản lý truy vấn, ánh xạ dữ liệu entity-database.
+- **Spring Security**: Xác thực, phân quyền, bảo mật ứng dụng.
+- **Thymeleaf**: Template engine render giao diện động phía server.
+- **Lombok**: Tự động sinh getter/setter, constructor, giảm boilerplate code.
+- **Jakarta Persistence (JPA)**: Annotation cho entity, ánh xạ ORM.
+- **Cloudinary SDK**: Upload ảnh sản phẩm lên cloud.
+- **Jackson**: Xử lý JSON cho REST API.
+- **Bootstrap, jQuery**: Giao diện frontend, responsive, hiệu ứng động.
+- **Maven**: Quản lý dự án, dependency, build.
+- **Docker**: Đóng gói, triển khai ứng dụng.
+- **MySQL**: Hệ quản trị cơ sở dữ liệu quan hệ.
 
-## 🚀 Tính năng chính
+---
 
-### 🛒 Customer Features
-- **Đăng ký/Đăng nhập** - Hỗ trợ đăng nhập bằng Google OAuth2
-- **Quên mật khẩu** - Reset password qua email
-- **Tìm kiếm sản phẩm** - Search theo tên, category (hỗ trợ không dấu)
-- **Giỏ hàng** - Add/remove/update sản phẩm
-- **Danh sách yêu thích** - Lưu sản phẩm favorite
-- **Đặt hàng** - Checkout process hoàn chỉnh
-- **Thanh toán** - Tích hợp VNPay payment gateway
-- **Theo dõi đơn hàng** - Xem lịch sử và trạng thái đơn hàng
+# BÁO CÁO OOP VÀ QUAN HỆ ENTITY TRONG DỰ ÁN
 
-### 👨‍💼 Admin Features
-- **Dashboard** - Thống kê tổng quan
-- **Quản lý khách hàng** - CRUD customers
-- **Quản lý sản phẩm** - CRUD products với upload hình ảnh
-- **Quản lý danh mục** - CRUD categories
-- **Quản lý đơn hàng** - Xem và cập nhật order status
-- **Phân quyền** - Role-based access control
-- **Upload hình ảnh** - Tích hợp Cloudinary
+## 1. Đóng gói (Encapsulation)
+**Vị trí:** Thư mục entity
 
-### 🔐 Security Features
-- **Spring Security 6** - Authentication & Authorization
-- **JWT Token** - Session management
-- **OAuth2** - Google social login
-- **Password Encryption** - BCrypt hashing
-- **CSRF Protection** - Cross-site request forgery protection
-- **Role-based Access** - DIRE, STAF, CUST roles
+- Tất cả các entity đều khai báo thuộc tính với phạm vi truy cập private.
+- Việc truy cập và thay đổi giá trị các thuộc tính này đều phải thông qua các phương thức công khai (getter/setter).
+- Điều này giúp bảo vệ dữ liệu nội bộ, không cho phép truy cập trực tiếp từ bên ngoài, đảm bảo tính toàn vẹn và an toàn của dữ liệu.
+
+**Ví dụ:**
+- private String brand; (trong Watch.java)
+- private Integer id; (trong Product.java)
+- ... (tất cả các thuộc tính đều là private)
+
+---
+
+## 2. Kế thừa (Inheritance)
+**Vị trí:** Thư mục entity
+
+**Lớp cha:** Product
+- id: Integer
+- name: String
+- image: String
+- public_id: String
+- price: Double
+- quantity: Integer
+- createDate: Date
+- available: Boolean
+- category: Category
+- orderDetails: List<OrderDetail>
+
+**Các lớp con kế thừa Product và mở rộng thuộc tính:**
+- Watch: brand, strapMaterial
+- Hat: color, style
+- Camera: resolution, sensorType
+- Jewelry: material, gemstone
+- Laptop: cpu, ram
+- Perfume: fragrance, brand
+- Phone: os, screenSize
+- TravelBag: size, material
+
+---
+
+## 3. Đa hình (Polymorphism)
+**Vị trí:** Thư mục entity, service, controller
+
+- Đa hình thể hiện khi các đối tượng kiểu Product có thể là bất kỳ lớp con nào như Watch, Hat, Camera, ...
+- Khi thao tác với danh sách sản phẩm, hệ thống có thể sử dụng chung kiểu Product nhưng thực tế mỗi phần tử có thể là một lớp con khác nhau, cho phép mở rộng và xử lý linh hoạt.
+
+**Ví dụ thực tế:**
+- Danh sách List<Product> có thể chứa cả Watch, Hat, Camera, ...
+- Các phương thức trong service/controller nhận tham số hoặc trả về kiểu Product, nhưng thực tế có thể là bất kỳ lớp con nào.
+
+---
+
+## 4. Trừu tượng (Abstraction)
+**Vị trí:** Thư mục dao
+
+- Các interface DAO định nghĩa thao tác dữ liệu, không chứa logic cụ thể:
+   - ProductDAO
+   - OrderDAO
+   - OrderDetailDAO
+   - CategoryDAO
+   - CustomerDAO
+   - FavoriteDAO
+   - RoleDAO
+   - AuthorityDAO
+   - CartItemDAO
+- Các interface này kế thừa từ JpaRepository, chỉ định các phương thức thao tác dữ liệu, còn chi tiết thực thi do Spring Data JPA đảm nhiệm.
+- Điều này giúp ẩn chi tiết cài đặt, chỉ tập trung vào các chức năng cần thiết, tăng khả năng mở rộng và bảo trì.
+
+---
+
+## 5. Mô tả quan hệ giữa các entity trong database
+**Vị trí:** Thư mục entity
+
+### 1. Product – Category
+- **Quan hệ:** Nhiều sản phẩm (Product) thuộc về một danh mục (Category).
+- **Thể hiện:**
+   - Trong Product:
+      - @ManyToOne
+         Category category;
+   - Trong Category:
+      - @OneToMany(mappedBy = "category")
+         List<Product> products;
+
+### 2. Product – OrderDetail
+- **Quan hệ:** Một sản phẩm (Product) có thể xuất hiện trong nhiều chi tiết đơn hàng (OrderDetail).
+- **Thể hiện:**
+   - Trong Product:
+      - @OneToMany(mappedBy = "product")
+         List<OrderDetail> orderDetails;
+   - Trong OrderDetail:
+      - @ManyToOne
+         Product product;
+
+### 3. Order – OrderDetail
+- **Quan hệ:** Một đơn hàng (Order) có nhiều chi tiết đơn hàng (OrderDetail).
+- **Thể hiện:**
+   - Trong Order:
+      - @OneToMany(mappedBy = "order")
+         List<OrderDetail> orderDetails;
+   - Trong OrderDetail:
+      - @ManyToOne
+         Order order;
+
+### 4. Order – Customers
+- **Quan hệ:** Một đơn hàng (Order) thuộc về một khách hàng (Customers).
+- **Thể hiện:**
+   - Trong Order:
+      - @ManyToOne
+         Customers customer;
+
+### 5. Customers – Favorite – Product
+- **Quan hệ:**
+   - Một khách hàng (Customers) có thể yêu thích nhiều sản phẩm (Product) và ngược lại (nhiều-nhiều), thông qua bảng trung gian Favorite.
+- **Thể hiện:**
+   - Trong Favorite:
+      - @Id customerId, @Id productId
+      - @ManyToOne
+         Customers customer;
+      - @ManyToOne
+         Product product;
+
+### 6. Customers – CartItem – Product
+- **Quan hệ:**
+   - Một khách hàng (Customers) có thể có nhiều sản phẩm (Product) trong giỏ hàng (CartItem), và ngược lại (nhiều-nhiều), thông qua bảng trung gian CartItem.
+- **Thể hiện:**
+   - Trong CartItem:
+      - @Id customerId, @Id productId
+      - @ManyToOne
+         Customers customer;
+      - @ManyToOne
+         Product product;
+
+### 7. Các quan hệ khác
+- Role, Authority, ...: Các entity này dùng cho phân quyền, liên kết với Customers hoặc các bảng khác thông qua các quan hệ nhiều-một hoặc nhiều-nhiều tùy vào thiết kế chi tiết.
+
+---
 
 ## 📦 Cấu trúc dự án
 

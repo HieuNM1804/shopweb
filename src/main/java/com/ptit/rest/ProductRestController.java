@@ -1,9 +1,9 @@
 package com.ptit.rest;
 
+import com.ptit.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.ptit.entity.Product;
 import com.ptit.service.ProductService;
 
 import java.util.List;
@@ -16,26 +16,23 @@ public class ProductRestController {
     ProductService productService;
 
     @GetMapping
-    public List<Product> getAll() {
-        return productService.findAll();
+    public List<Object> getAll() {
+        return productService.findAllDTO();
     }
 
     @GetMapping("{id}")
-    public Product getOne(@PathVariable("id") Integer id) {
-        return productService.findById(id);
+    public Object getOne(@PathVariable("id") Integer id) {
+        return productService.findDTOById(id);
     }
 
     @PostMapping
-    public Product create(@RequestBody Product product) {
-        if (product.getCategory() == null || product.getCategory().getId() == null) {
-            throw new IllegalArgumentException("Category is required");
-        }
-        return productService.create(product);
+    public Product create(@RequestBody Object dto) {
+        return productService.createFromDTO(dto);
     }
 
     @PutMapping("{id}")
-    public Product update(@PathVariable("id") Integer id, @RequestBody Product product) {
-        return productService.update(product);
+    public Product update(@PathVariable("id") Integer id, @RequestBody Object dto) {
+        return productService.updateFromDTO(dto);
     }
 
     @DeleteMapping("{id}")
