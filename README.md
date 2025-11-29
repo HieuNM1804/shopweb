@@ -113,13 +113,30 @@ SOURCE database.sql;
 ```
 
 ### 3. Cấu hình environment variables
-File `.env` đã có sẵn trong thư mục gốc của dự án. Bạn chỉ cần mở file này và cập nhật mật khẩu database (nếu khác `1234`):
+Tạo một file tên là `.env` tại thư mục gốc của dự án (cùng cấp với file `pom.xml`).
+Copy nội dung dưới đây vào file `.env` và cập nhật các giá trị tương ứng của bạn:
 
 ```env
 # Database
 DB_PASSWORD=your_mysql_password
+
+# Mail Configuration
+MAIL_USERNAME=your_gmail@gmail.com
+MAIL_PASSWORD=your_app_password
+
+# Google OAuth2
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# VNPay
+VNPAY_TMN_CODE=your_vnpay_tmn_code
+VNPAY_HASH_SECRET=your_vnpay_hash_secret
+
+# Cloudinary
+CLOUD_NAME=your_cloudinary_name
+CLOUD_KEY=your_cloudinary_key
+CLOUD_SECRET=your_cloudinary_secret
 ```
-Các cấu hình khác (Mail, OAuth2, VNPay, Cloudinary) cũng có thể được cập nhật tại đây nếu cần.
 
 ### 4. Chạy ứng dụng
 ```bash
