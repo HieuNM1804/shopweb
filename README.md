@@ -1,6 +1,4 @@
----
 
-# BÁO CÁO OOP VÀ QUAN HỆ ENTITY TRONG DỰ ÁN
 
 ## Giới thiệu về website
 
