@@ -116,6 +116,25 @@ public class Product implements Serializable {
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
     }
+    
+    // --- POLYMORPHISM METHODS (TÍNH ĐA HÌNH) ---
+
+    /**
+     * Tính phí vận chuyển dựa trên đặc thù sản phẩm
+     * Mặc định là 30.000 VNĐ
+     */
+    public Double calculateShippingFee() {
+        return 30000.0;
+    }
+
+    /**
+     * Lấy thông tin bảo hành
+     * Mặc định là 12 tháng
+     */
+    public String getWarrantyPeriod() {
+        return "12 Tháng (Tiêu chuẩn)";
+    }
+
     public String getProductType() {
         return "Product";
     }

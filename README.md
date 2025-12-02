@@ -76,14 +76,38 @@ WebShop là hệ thống thương mại điện tử cho phép người dùng mu
 ---
 
 ## 3. Đa hình (Polymorphism)
-**Vị trí:** Thư mục entity, service, controller
+**Vị trí:** Thư mục entity, service, strategy
 
-- Đa hình thể hiện khi các đối tượng kiểu Product có thể là bất kỳ lớp con nào như Watch, Hat, Camera, ...
-- Khi thao tác với danh sách sản phẩm, hệ thống có thể sử dụng chung kiểu Product nhưng thực tế mỗi phần tử có thể là một lớp con khác nhau, cho phép mở rộng và xử lý linh hoạt.
+Dự án áp dụng tính đa hình mạnh mẽ ở cả tầng dữ liệu (Entity) và tầng nghiệp vụ (Service) thông qua cơ chế ghi đè phương thức (Overriding) và mẫu thiết kế Strategy Pattern.
 
-**Ví dụ thực tế:**
-- Danh sách List<Product> có thể chứa cả Watch, Hat, Camera, ...
-- Các phương thức trong service/controller nhận tham số hoặc trả về kiểu Product, nhưng thực tế có thể là bất kỳ lớp con nào.
+### a. Đa hình trong Entity (Runtime Polymorphism)
+Các lớp con của `Product` ghi đè các phương thức của lớp cha để thể hiện hành vi riêng biệt cho từng loại sản phẩm.
+
+- **Lớp cha `Product`:** Định nghĩa các phương thức mặc định:
+    - `calculateShippingFee()`: Mặc định 30.000 VNĐ.
+    - `getWarrantyPeriod()`: Mặc định 12 tháng.
+    - `getProductType()`: Mặc định "Product".
+- **Các lớp con (`Laptop`, `Watch`, ...):** Ghi đè để thay đổi logic:
+    - `Laptop`: Phí ship 100.000 VNĐ (do nặng + bảo hiểm), bảo hành 24 tháng.
+    - `Watch`: Phí ship 15.000 VNĐ, bảo hành 36 tháng.
+    - `getName()`: Tự động nối thêm hậu tố loại sản phẩm (ví dụ: "Rolex (Watch)").
+
+**Lợi ích:** Khi tính toán giỏ hàng, hệ thống chỉ cần gọi `product.calculateShippingFee()` mà không cần kiểm tra `if (product instanceof Laptop)`.
+
+### b. Đa hình trong Thanh toán (Strategy Pattern)
+Sử dụng **Strategy Pattern** để quản lý các phương thức thanh toán, giúp dễ dàng mở rộng thêm cổng thanh toán mới (Momo, ZaloPay) mà không sửa code cũ.
+
+- **Interface `PaymentStrategy`:** Định nghĩa chuẩn chung `pay()`.
+- **Các chiến lược cụ thể:**
+    - `VNPayStrategy`: Xử lý logic gọi API VNPay, tạo URL thanh toán.
+    - `CODStrategy`: Xử lý thanh toán khi nhận hàng (đơn giản là chuyển hướng).
+- **`PaymentServiceContext`:** Quản lý và lựa chọn chiến lược thanh toán phù hợp tại runtime dựa trên lựa chọn của người dùng.
+
+### c. Đa hình trong Khuyến mãi (Strategy Pattern)
+- **Interface `DiscountStrategy`:** Định nghĩa chuẩn tính giảm giá `calculateDiscount()`.
+- **Các chiến lược cụ thể:**
+    - `PercentageDiscountStrategy`: Tính giảm giá theo phần trăm.
+- **`DiscountService`:** Tự động tìm và áp dụng mức giảm giá tốt nhất cho khách hàng từ danh sách các chiến lược hiện có.
 
 ---
 

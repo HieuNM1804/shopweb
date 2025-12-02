@@ -16,4 +16,17 @@ public class Watch extends Product {
     public void setBrand(String brand) { this.brand = brand; }
     public String getStrapMaterial() { return strapMaterial; }
     public void setStrapMaterial(String strapMaterial) { this.strapMaterial = strapMaterial; }
+
+    // --- POLYMORPHISM OVERRIDES ---
+
+    @Override
+    public Double calculateShippingFee() {
+        // Đồng hồ nhẹ, phí ship rẻ
+        return 15000.0; 
+    }
+
+    @Override
+    public String getWarrantyPeriod() {
+        return "36 Tháng (Bảo hành máy)";
+    }
 }
